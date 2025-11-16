@@ -4,11 +4,12 @@ This service fetches forex data from Twelve Data API.
 
 Twelve Data provides free-tier access to forex data with WebSocket support.
 Free tier includes 800 API calls per day.
-API Key: 217116a3a840410197f04f747300b3b1
+API Key: Can be set via TWELVE_DATA_API_KEY environment variable
 """
 import requests
 from datetime import datetime, timedelta
 import logging
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -24,8 +25,9 @@ class TwelveDataService:
     # Base URL for Twelve Data API
     BASE_URL = "https://api.twelvedata.com"
     
-    # API Key provided by user
-    API_KEY = "217116a3a840410197f04f747300b3b1"
+    # API Key - read from environment variable or use default
+    # Set TWELVE_DATA_API_KEY in Render dashboard environment variables
+    API_KEY = os.environ.get('TWELVE_DATA_API_KEY', '217116a3a840410197f04f747300b3b1')
     
     @staticmethod
     def get_realtime_quote(symbol: str) -> dict:

@@ -70,7 +70,10 @@ class Health(Resource):
 if __name__ == '__main__':
     # Get port from environment variable or use default 5000
     port = int(os.environ.get('PORT', 5000))
+    # Debug mode: True for local development, False for production
+    # In production (Render), set FLASK_ENV=production or FLASK_DEBUG=False
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
     # Run the Flask development server
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
 
 

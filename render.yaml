@@ -18,13 +18,19 @@ services:
     # Build command - installs dependencies
     buildCommand: pip install -r requirements.txt
     # Start command - uses gunicorn for production
-    startCommand: gunicorn app:app
+    # --workers 2 is optimized for free tier (512MB RAM)
+    # Increase workers for paid tiers
+    startCommand: gunicorn app:app --workers 2 --timeout 120
     # Environment variables (optional - you can also set these in Render dashboard)
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.10.0  # Match your local Python version
       - key: PORT
         value: 10000  # Render will override this automatically
+      - key: FLASK_DEBUG
+        value: "False"  # Disable debug mode in production
+      - key: FLASK_ENV
+        value: "production"  # Set to production environment
     # Health check path
     healthCheckPath: /api/health
     # Auto-deploy from main branch

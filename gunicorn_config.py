@@ -13,11 +13,15 @@ bind = f"0.0.0.0:{os.environ.get('PORT', 5000)}"
 backlog = 2048
 
 # Worker processes
-# Formula: (2 x CPU cores) + 1
-workers = multiprocessing.cpu_count() * 2 + 1
-# For Render.com free tier, use fewer workers to avoid memory issues
-# Uncomment the line below if you're on free tier
-# workers = 2
+# For Render.com free tier (512MB RAM), use 2 workers to avoid memory issues
+# For paid tiers, you can use more workers
+# Formula for paid tiers: (2 x CPU cores) + 1
+if os.environ.get('RENDER') or os.environ.get('RENDER_INSTANCE_ID'):
+    # Running on Render - use fewer workers for free tier
+    workers = 2
+else:
+    # Local development or other platforms
+    workers = multiprocessing.cpu_count() * 2 + 1
 
 # Worker class
 worker_class = "sync"

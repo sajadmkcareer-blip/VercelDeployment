@@ -4,11 +4,13 @@ This service fetches forex data from Alpha Vantage's free API.
 
 Alpha Vantage provides free forex exchange rate data with rate limits.
 Free tier allows 5 API calls per minute and 500 calls per day.
+API Key: Can be set via ALPHA_VANTAGE_API_KEY environment variable
 """
 import requests
 from datetime import datetime, timedelta
 import logging
 import time
+import os
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -24,9 +26,10 @@ class AlphaVantageService:
     # Base URL for Alpha Vantage API
     BASE_URL = "https://www.alphavantage.co/query"
     
-    # Free API key - users can replace this with their own
+    # API Key - read from environment variable or use demo key
     # Get your free API key from: https://www.alphavantage.co/support/#api-key
-    API_KEY = "demo"  # Demo key for testing, users should replace with their own
+    # Set ALPHA_VANTAGE_API_KEY in Render dashboard environment variables
+    API_KEY = os.environ.get('ALPHA_VANTAGE_API_KEY', 'demo')
     
     @staticmethod
     def get_realtime_rate(from_currency: str, to_currency: str) -> dict:
