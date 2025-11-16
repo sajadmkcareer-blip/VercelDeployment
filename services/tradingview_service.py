@@ -37,11 +37,12 @@ class TradingViewService:
     
     # Interval mapping for different timeframes
     # These intervals determine the granularity of the data (1min, 5min, 15min, etc.)
+    # Note: TradingView TA library doesn't support 30min interval
     INTERVAL_MAP = {
         '1min': Interval.INTERVAL_1_MINUTE,
         '5min': Interval.INTERVAL_5_MINUTES,
         '15min': Interval.INTERVAL_15_MINUTES,
-        '30min': Interval.INTERVAL_30_MINUTES,
+        # '30min' is not supported by TradingView TA library, use '1hour' instead
         '1hour': Interval.INTERVAL_1_HOUR,
         '4hour': Interval.INTERVAL_4_HOURS,
         '1day': Interval.INTERVAL_1_DAY,
@@ -82,7 +83,8 @@ class TradingViewService:
         Args:
             symbol: Forex pair symbol (e.g., 'EURUSD')
             interval: Time interval for analysis (default: '15min')
-                     Options: '1min', '5min', '15min', '30min', '1hour', '4hour', '1day'
+                     Options: '1min', '5min', '15min', '1hour', '4hour', '1day'
+                     Note: '30min' is not supported by TradingView TA library
             exchange: Exchange identifier (default: 'FX' for forex)
             
         Returns:

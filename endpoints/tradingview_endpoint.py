@@ -45,8 +45,8 @@ signal_model = ns.model('TradingViewSignal', {
 # These parameters can be passed in the URL query string
 parser = ns.parser()
 parser.add_argument('interval', type=str, default='15min', 
-                   choices=['1min', '5min', '15min', '30min', '1hour', '4hour', '1day'],
-                   help='Time interval for analysis (default: 15min)',
+                   choices=['1min', '5min', '15min', '1hour', '4hour', '1day'],
+                   help='Time interval for analysis (default: 15min). Note: 30min is not supported by TradingView TA, use 15min or 1hour instead.',
                    location='args')
 parser.add_argument('symbols', type=str,
                    help='Comma-separated list of forex pair symbols',
@@ -85,7 +85,8 @@ class TradingViewSignal(Resource):
             symbol: Forex pair symbol (e.g., 'EURUSD')
             
         Query Parameters:
-            interval: Time interval (1min, 5min, 15min, 30min, 1hour, 4hour, 1day)
+            interval: Time interval (1min, 5min, 15min, 1hour, 4hour, 1day)
+                     Note: 30min is not supported by TradingView TA
             
         Returns:
             dict: Trading signals and technical indicators

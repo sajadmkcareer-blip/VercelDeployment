@@ -44,8 +44,8 @@ aggregated_model = ns.model('AggregatedSignals', {
 # Define query parameter parser
 parser = ns.parser()
 parser.add_argument('interval', type=str, default='15min',
-                   choices=['1min', '5min', '15min', '30min', '1hour', '4hour', '1day'],
-                   help='Time interval for analysis (default: 15min)',
+                   choices=['1min', '5min', '15min', '1hour', '4hour', '1day'],
+                   help='Time interval for analysis (default: 15min). Note: 30min is not supported by TradingView TA.',
                    location='args')
 
 
