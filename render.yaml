@@ -1,0 +1,32 @@
+# Render.com deployment configuration
+# This file defines how your application should be deployed on Render
+# 
+# To use this file:
+# 1. Push your code to GitHub
+# 2. In Render dashboard, create a new Web Service
+# 3. Connect your GitHub repository
+# 4. Render will automatically detect this render.yaml file
+# 
+# Alternatively, you can configure manually in the Render dashboard
+
+services:
+  # Web service configuration
+  - type: web
+    name: forex-trading-signals-api
+    # Runtime environment
+    env: python
+    # Build command - installs dependencies
+    buildCommand: pip install -r requirements.txt
+    # Start command - uses gunicorn for production
+    startCommand: gunicorn app:app
+    # Environment variables (optional - you can also set these in Render dashboard)
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 10000  # Render will override this automatically
+    # Health check path
+    healthCheckPath: /api/health
+    # Auto-deploy from main branch
+    plan: free  # Change to 'starter' or 'standard' for paid plans
+
